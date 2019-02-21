@@ -25,11 +25,21 @@
  * 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
  * 
  */
+// 听妙的题目 值得深思！！！
 int maxSubArray(int* nums, int numsSize) {
-    int i;
-    int max_num; // 记录最大值
-    for(i=1; i<=numsSize;i++)
+    int sum = 0;
+    int max_num = nums[0];
+    for (int i = 0; i < numsSize; i++)
     {
-        for()
+        sum += nums[i];
+        if (sum > max_num)
+        {
+            max_num = sum;
+        }
+        if (sum < 0)
+        {
+            sum = 0;
+        }
     }
+    return max_num;
 }
