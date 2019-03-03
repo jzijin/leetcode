@@ -35,6 +35,8 @@
 
 
 // 实际上就是求组合数
+// 但是效率不高 涉及浮点数 数字不准确
+/*
 double getNum(int n)
 {
     double sum = 1;
@@ -54,4 +56,21 @@ int* getRow(int rowIndex, int* returnSize) {
         array[i] = getNum(rowIndex) / (getNum(i)*getNum(rowIndex-i));
     }
     return array;
+}
+*/
+
+// 求排列组合可以转化为求 杨辉三角！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+int *getRow(int rowIndex, int *returnSize)
+{
+    *returnSize = rowIndex + 1;
+    int *num = (int *)malloc((rowIndex + 1) * sizeof(int));
+    for (int i = 0; i <= rowIndex; i++)
+        for (int j = i; j >= 0; j--)
+        {
+            if (j == 0 || j == i)
+                num[j] = 1;
+            else
+                num[j] = num[j] + num[j - 1];
+        }
+    return num;
 }

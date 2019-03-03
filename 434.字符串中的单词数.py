@@ -1,0 +1,45 @@
+#
+# @lc app=leetcode.cn id=434 lang=python
+#
+# [434] 字符串中的单词数
+#
+# https://leetcode-cn.com/problems/number-of-segments-in-a-string/description/
+#
+# algorithms
+# Easy (28.57%)
+# Total Accepted:    3.6K
+# Total Submissions: 12.5K
+# Testcase Example:  '"Hello, my name is John"'
+#
+# 统计字符串中的单词个数，这里的单词指的是连续的不是空格的字符。
+# 
+# 请注意，你可以假定字符串里不包括任何不可打印的字符。
+# 
+# 示例:
+# 
+# 输入: "Hello, my name is John"
+# 输出: 5
+# 
+# 
+#
+class Solution(object):
+    def countSegments(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        flag = 0
+        count = 0
+        s_length = len(s)
+        for i in range(0, s_length):
+            # print(s[i])
+            if s[i] != ' ':
+                if not flag:
+                    count = count + 1
+                flag = 1
+            else:
+                flag = 0
+                
+        return count
+        
+

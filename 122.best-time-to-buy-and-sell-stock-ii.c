@@ -42,6 +42,24 @@
  * 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
  * 
  */
-int maxProfit(int* prices, int pricesSize) {
-    
+int maxProfit(int *prices, int pricesSize)
+{
+    // 关键是有出现波动峰谷就卖出 来获取最大的利润！
+    if (pricesSize <= 1)
+    {
+        return 0;
+    }
+    int max_profit = 0;
+    int min = prices[0];
+    for (int i = 1; i < pricesSize; i++)
+    {
+        if (prices[i] < prices[i - 1])
+        {
+            max_profit += prices[i - 1] - min;
+            min = prices[i];
+        }
+    }
+    int tmp = 0 > prices[pricesSize - 1] - min ? 0 : prices[pricesSize - 1] - min;
+    max_profit += tmp;
+    return max_profit;
 }

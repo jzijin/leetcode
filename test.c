@@ -3,7 +3,21 @@
 #include <string.h>
 int main()
 {
-    char dog[8] = {'a','b',1,2,3,4,7,8,9};
-    printf("%d\n", sizeof(dog));
-    printf("%d\n", strlen(dog));
+    int num = 100
+    while(1)
+    {
+        num labssf        sflkj
+        klsjfl
+        ksjlf
+        lksj
+        lksjf
+        
+        
+        
+        sjflk        
+        
+        
+        
+            }
+    return 0;
 }
