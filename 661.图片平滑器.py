@@ -39,52 +39,62 @@
 # 
 # 
 #
-class Solution(object):
-    def calculate(self, M, i, j):
-        row = len(M)
-        col = len(M[0])
+# class Solution(object):
+#     def calculate(self, M, i, j):
+#         row = len(M)
+#         col = len(M[0])
         
-        total = 0;
-        total += M[i][j]
-        index = 1
-        if i+1 < row-1:
-            total += M[i+1][j]
-            index += 1
-        if i-1 >= 0:
-            total += M[i-1][j]
-            index += 1
-        if j+1 < col-1:
-            total += M[i][j+1]
-            index += 1
-        if j-1 >= col-1:
-            total += M[i][j-1]
-            index += 1
-        if i+1<row-1 and j+1 < col-1:
-            total += M[i+1][j+1]
-            index += 1
-        if i+1<row-1 and j-1 >= 0:
-            total += M[i+1][j-1]
-            index += 1
-        if i-1>=0 and j+1 < col-1:
-            total += M[i-1][j+1]
-            index += 1
-        if i-1>=0 and j-1 >= 0:
-            total += M[i-1][j-1]
-            index += 1
-        # total += M[i][j]
-        return total/index
+#         total = 0;
+#         total += M[i][j]
+#         index = 1
+#         if i+1 < row-1:
+#             total += M[i+1][j]
+#             index += 1
+#         if i-1 >= 0:
+#             total += M[i-1][j]
+#             index += 1
+#         if j+1 < col-1:
+#             total += M[i][j+1]
+#             index += 1
+#         if j-1 >= 0:
+#             total += M[i][j-1]
+#             index += 1
+#         if i+1<row-1 and j+1 < col-1:
+#             total += M[i+1][j+1]
+#             index += 1
+#         if i+1<row-1 and j-1 >= 0:
+#             total += M[i+1][j-1]
+#             index += 1
+#         if i-1>=0 and j+1 < col-1:
+#             total += M[i-1][j+1]
+#             index += 1
+#         if i-1>=0 and j-1 >= 0:
+#             total += M[i-1][j-1]
+#             index += 1
+#         # total += M[i][j]
+#         return total/index
             
     def imageSmoother(self, M):
         """
         :type M: List[List[int]]
         :rtype: List[List[int]]
         """
-        row = len(M)
-        col = len(M[0])
-        for i in range(0, row):
-            for j in range(0, col):
-                M[i][j] = self.calculate(M, i, j)
-        return M
+        N = [[0 for i in j] for j in M]
+        d = [(-1,-1), (-1, 0), (-1, 1), (0, -1), (0, 0), (0, 1), (1, -1), (1, 0), (1, 1)]
+        
+        for x in range(len(M)):
+            for y in range(len(M[0])):
+                
+                num = 0
+                sum = 0
+                for k in d:
+                    xi, yi = x + k[0], y + k[1]
+                    if 0 <= xi < len(M) and 0 <= yi < len(M[0]):
+                        sum += M[xi][yi]
+                        num += 1
+                N[x][y] = sum // num
+        return N
+        
         
         
 

@@ -4,6 +4,7 @@
 //https://leetcode-cn.com/problems/n-ary-tree-postorder-traversal/
 //https://leetcode-cn.com/problems/diameter-of-binary-tree/
 //https://leetcode-cn.com/problems/n-ary-tree-level-order-traversal/
+//https://leetcode-cn.com/problems/binary-tree-paths/
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -132,6 +133,8 @@ void PostOrder(struct TreeNode *root)
     }
 }
 // 4、 层序 遍历 需要用到队列 https://leetcode-cn.com/problems/average-of-levels-in-binary-tree/
+// https://leetcode-cn.com/problems/binary-tree-level-order-traversal/
+// https://leetcode-cn.com/problems/find-bottom-left-tree-value/
 void LevelOrder(struct TreeNode *root)
 {
     if(root == NULL)
