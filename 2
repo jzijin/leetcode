@@ -1,0 +1,260 @@
+	.file	"test.c"
+	.text
+	.globl	_Merge
+	.def	_Merge;	.scl	2;	.type	32;	.endef
+_Merge:
+LFB16:
+	.cfi_startproc
+	pushl	%ebp
+	.cfi_def_cfa_offset 8
+	.cfi_offset 5, -8
+	movl	%esp, %ebp
+	.cfi_def_cfa_register 5
+	subl	$16, %esp
+	movl	16(%ebp), %eax
+	movl	%eax, -4(%ebp)
+	movl	20(%ebp), %eax
+	addl	$1, %eax
+	movl	%eax, -8(%ebp)
+	movl	16(%ebp), %eax
+	movl	%eax, -12(%ebp)
+	jmp	L2
+L5:
+	movl	-4(%ebp), %eax
+	leal	0(,%eax,4), %edx
+	movl	8(%ebp), %eax
+	addl	%edx, %eax
+	movl	(%eax), %edx
+	movl	-8(%ebp), %eax
+	leal	0(,%eax,4), %ecx
+	movl	8(%ebp), %eax
+	addl	%ecx, %eax
+	movl	(%eax), %eax
+	cmpl	%eax, %edx
+	jle	L3
+	movl	-12(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	%edx, -12(%ebp)
+	leal	0(,%eax,4), %edx
+	movl	12(%ebp), %eax
+	leal	(%edx,%eax), %ecx
+	movl	-8(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	%edx, -8(%ebp)
+	leal	0(,%eax,4), %edx
+	movl	8(%ebp), %eax
+	addl	%edx, %eax
+	movl	(%eax), %eax
+	movl	%eax, (%ecx)
+	jmp	L2
+L3:
+	movl	-12(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	%edx, -12(%ebp)
+	leal	0(,%eax,4), %edx
+	movl	12(%ebp), %eax
+	leal	(%edx,%eax), %ecx
+	movl	-4(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	%edx, -4(%ebp)
+	leal	0(,%eax,4), %edx
+	movl	8(%ebp), %eax
+	addl	%edx, %eax
+	movl	(%eax), %eax
+	movl	%eax, (%ecx)
+L2:
+	movl	20(%ebp), %eax
+	addl	$1, %eax
+	cmpl	-4(%ebp), %eax
+	je	L6
+	movl	24(%ebp), %eax
+	addl	$1, %eax
+	cmpl	-8(%ebp), %eax
+	jne	L5
+	jmp	L6
+L7:
+	movl	-12(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	%edx, -12(%ebp)
+	leal	0(,%eax,4), %edx
+	movl	12(%ebp), %eax
+	leal	(%edx,%eax), %ecx
+	movl	-4(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	%edx, -4(%ebp)
+	leal	0(,%eax,4), %edx
+	movl	8(%ebp), %eax
+	addl	%edx, %eax
+	movl	(%eax), %eax
+	movl	%eax, (%ecx)
+L6:
+	movl	20(%ebp), %eax
+	addl	$1, %eax
+	cmpl	-4(%ebp), %eax
+	jne	L7
+	jmp	L8
+L9:
+	movl	-12(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	%edx, -12(%ebp)
+	leal	0(,%eax,4), %edx
+	movl	12(%ebp), %eax
+	leal	(%edx,%eax), %ecx
+	movl	-8(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	%edx, -8(%ebp)
+	leal	0(,%eax,4), %edx
+	movl	8(%ebp), %eax
+	addl	%edx, %eax
+	movl	(%eax), %eax
+	movl	%eax, (%ecx)
+L8:
+	movl	24(%ebp), %eax
+	addl	$1, %eax
+	cmpl	-8(%ebp), %eax
+	jne	L9
+	movl	16(%ebp), %eax
+	movl	%eax, -4(%ebp)
+	jmp	L10
+L11:
+	movl	-4(%ebp), %eax
+	leal	0(,%eax,4), %edx
+	movl	8(%ebp), %eax
+	addl	%eax, %edx
+	movl	-4(%ebp), %eax
+	leal	0(,%eax,4), %ecx
+	movl	12(%ebp), %eax
+	addl	%ecx, %eax
+	movl	(%eax), %eax
+	movl	%eax, (%edx)
+	addl	$1, -4(%ebp)
+L10:
+	movl	-4(%ebp), %eax
+	cmpl	24(%ebp), %eax
+	jle	L11
+	nop
+	leave
+	.cfi_restore 5
+	.cfi_def_cfa 4, 4
+	ret
+	.cfi_endproc
+LFE16:
+	.globl	_MergeSort
+	.def	_MergeSort;	.scl	2;	.type	32;	.endef
+_MergeSort:
+LFB17:
+	.cfi_startproc
+	pushl	%ebp
+	.cfi_def_cfa_offset 8
+	.cfi_offset 5, -8
+	movl	%esp, %ebp
+	.cfi_def_cfa_register 5
+	subl	$56, %esp
+	movl	16(%ebp), %eax
+	cmpl	20(%ebp), %eax
+	jge	L14
+	movl	20(%ebp), %eax
+	subl	16(%ebp), %eax
+	movl	%eax, %edx
+	shrl	$31, %edx
+	addl	%edx, %eax
+	sarl	%eax
+	movl	%eax, %edx
+	movl	16(%ebp), %eax
+	addl	%edx, %eax
+	movl	%eax, -12(%ebp)
+	movl	-12(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	_MergeSort
+	movl	-12(%ebp), %eax
+	leal	1(%eax), %edx
+	movl	20(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	%edx, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	_MergeSort
+	movl	20(%ebp), %eax
+	movl	%eax, 16(%esp)
+	movl	-12(%ebp), %eax
+	movl	%eax, 12(%esp)
+	movl	16(%ebp), %eax
+	movl	%eax, 8(%esp)
+	movl	12(%ebp), %eax
+	movl	%eax, 4(%esp)
+	movl	8(%ebp), %eax
+	movl	%eax, (%esp)
+	call	_Merge
+L14:
+	nop
+	leave
+	.cfi_restore 5
+	.cfi_def_cfa 4, 4
+	ret
+	.cfi_endproc
+LFE17:
+	.def	___main;	.scl	2;	.type	32;	.endef
+	.section .rdata,"dr"
+LC0:
+	.ascii "%d \0"
+	.text
+	.globl	_main
+	.def	_main;	.scl	2;	.type	32;	.endef
+_main:
+LFB18:
+	.cfi_startproc
+	pushl	%ebp
+	.cfi_def_cfa_offset 8
+	.cfi_offset 5, -8
+	movl	%esp, %ebp
+	.cfi_def_cfa_register 5
+	andl	$-16, %esp
+	subl	$96, %esp
+	call	___main
+	movl	$50, 60(%esp)
+	movl	$10, 64(%esp)
+	movl	$20, 68(%esp)
+	movl	$30, 72(%esp)
+	movl	$70, 76(%esp)
+	movl	$40, 80(%esp)
+	movl	$80, 84(%esp)
+	movl	$60, 88(%esp)
+	movl	$7, 12(%esp)
+	movl	$0, 8(%esp)
+	leal	28(%esp), %eax
+	movl	%eax, 4(%esp)
+	leal	60(%esp), %eax
+	movl	%eax, (%esp)
+	call	_MergeSort
+	movl	$0, 92(%esp)
+	jmp	L16
+L17:
+	movl	92(%esp), %eax
+	movl	60(%esp,%eax,4), %eax
+	movl	%eax, 4(%esp)
+	movl	$LC0, (%esp)
+	call	_printf
+	addl	$1, 92(%esp)
+L16:
+	cmpl	$7, 92(%esp)
+	jle	L17
+	movl	$10, (%esp)
+	call	_putchar
+	movl	$0, %eax
+	leave
+	.cfi_restore 5
+	.cfi_def_cfa 4, 4
+	ret
+	.cfi_endproc
+LFE18:
+	.ident	"GCC: (i686-posix-dwarf-rev0, Built by MinGW-W64 project) 5.3.0"
+	.def	_printf;	.scl	2;	.type	32;	.endef
+	.def	_putchar;	.scl	2;	.type	32;	.endef

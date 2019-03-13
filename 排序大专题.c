@@ -155,3 +155,117 @@ def merge_sort(lst):
         slen *= 2
         merge_pass(templst, lst, llen, slen)  # 结果存回原位
         slen *= 2
+
+// c语言代码实现
+#include <stdlib.h>
+#include <stdio.h>
+
+void Merge(int sourceArr[], int tempArr[], int startIndex, int midIndex, int endIndex)
+{
+    int i = startIndex, j = midIndex + 1, k = startIndex;
+    while (i != midIndex + 1 && j != endIndex + 1) // 从小到大记录数据
+    {
+        if (sourceArr[i] > sourceArr[j])
+            tempArr[k++] = sourceArr[j++];
+        else
+            tempArr[k++] = sourceArr[i++];
+    }
+    while (i != midIndex + 1) // 记录前面一段的剩余部分
+        tempArr[k++] = sourceArr[i++];
+    while (j != endIndex + 1) // 记录后面一段的剩余部分
+        tempArr[k++] = sourceArr[j++];
+    for (i = startIndex; i <= endIndex; i++)
+        sourceArr[i] = tempArr[i]; // 重新写回
+}
+
+//内部使用递归 需要开辟和sourceArr一样大小的空间
+void MergeSort(int sourceArr[], int tempArr[], int startIndex, int endIndex)
+{
+    int midIndex;
+    if (startIndex < endIndex)
+    {
+        midIndex = startIndex + (endIndex - startIndex) / 2; //避免溢出int
+        MergeSort(sourceArr, tempArr, startIndex, midIndex);
+        MergeSort(sourceArr, tempArr, midIndex + 1, endIndex);
+        Merge(sourceArr, tempArr, startIndex, midIndex, endIndex);
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    int a[8] = {50, 10, 20, 30, 70, 40, 80, 60};
+    int i, b[8];
+    MergeSort(a, b, 0, 7);
+    for (i = 0; i < 8; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}
+// 堆排序
+// https://www.cnblogs.com/MOBIN/p/5374217.html
+// https://www.jianshu.com/p/938789fde325
+/*
+A[i]的左节点为A[2i+1],右节点为A[2i+2]，父节点为A[i/2]，它从数组索引的角度描述了数字与数字在二叉树中的位置关系。
+（1、在应用此结论时需确认A[i]存在相应的左节点、右节点、根节点；
+2、此结论在后面会反复用到；
+3、此结论实际上是完全二叉树的一个基本性质，这也是为什么堆的结构性要求其满足完全二叉树的形式，就是为了使用此结论）
+
+*/
+
+/*堆序性说得通俗一点儿就是，父节点中的元素不小于（不大于）任意子节点的元素。
+这里的元素在本文中是以数字体现的。注：本文只讨论“大根堆”，即父节点中的元素不小于任意子节点的元素这种情形。
+所以，在一个大根堆中，一个节点的元素在其子树所有元素组成的集合中必定是最大值。这一结论至关重要。
+以下给出了两个大根堆的示例：
+*/
+/*
+下面开始进入正题了，堆排序算法究竟是怎么实现的呢？其实只需要简单的两步就可以实现堆排序：1）根据无序数组创建一个大根堆；2）不断调整大根堆，使其到达有序。
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+ 
+void swap(int* a, int* b) {
+    int temp = *b;
+    *b = *a;
+    *a = temp;
+}
+ 
+void max_heapify(int arr[], int start, int end) {
+    //建立父节点指标和子节点指标
+    int dad = start;
+    int son = dad * 2 + 1;
+    while (son <= end) { //若子节点指标在范围内才做比较
+        if (son + 1 <= end && arr[son] < arr[son + 1]) //先比较两个子节点大小，选择最大的
+            son++;
+        if (arr[dad] > arr[son]) //如果父节点大於子节点代表调整完毕，直接跳出函数
+            return;
+        else { //否则交换父子内容再继续子节点和孙节点比较
+            swap(&arr[dad], &arr[son]);
+            dad = son;
+            son = dad * 2 + 1;
+        }
+    }
+}
+ 
+void heap_sort(int arr[], int len) {
+    int i;
+    //初始化，i从最後一个父节点开始调整
+    for (i = len / 2 - 1; i >= 0; i--)
+        max_heapify(arr, i, len - 1);
+    //先将第一个元素和已排好元素前一位做交换，再重新调整，直到排序完毕
+    for (i = len - 1; i > 0; i--) {
+        swap(&arr[0], &arr[i]);
+        max_heapify(arr, 0, i - 1);
+    }
+}
+ 
+int main() {
+    int arr[] = { 3, 5, 3, 0, 8, 6, 1, 5, 8, 6, 2, 4, 9, 4, 7, 0, 1, 8, 9, 7, 3, 1, 2, 5, 9, 7, 4, 0, 2, 6 };
+    int len = (int) sizeof(arr) / sizeof(*arr);
+    heap_sort(arr, len);
+    int i;
+    for (i = 0; i < len; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    return 0;
+}
