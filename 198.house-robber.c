@@ -86,3 +86,18 @@ int rob(int *nums, int numsSize)
     }
     return maxVal < prevVal ? prevVal : maxVal;
 }
+// 动态规划求解 TODO: 最重要的是要找到 关系 得到递推关系
+int rob(int* nums, int numsSize) {
+    if(numsSize <= 1)
+    {
+        return numsSize == 0 ? 0:nums[0];
+    }
+    int* memo = (int *)malloc(sizeof(int)*numsSize);
+    memo[0] = nums[0];
+    memo[1] = nums[0] > nums[1] ? nums[0] : nums[1];
+    for(int i=2; i<numsSize; i++)
+    {
+        memo[i] = memo[i-1] > nums[i]+memo[i-2] ? memo[i-1] : nums[i]+memo[i-2];
+    }
+    return memo[numsSize-1];
+}

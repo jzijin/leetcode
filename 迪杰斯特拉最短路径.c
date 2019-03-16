@@ -64,8 +64,3 @@ void dijkstra(Graph G, int vs, int prev[], int dist[])
         printf("  shortest(%c, %c)=%d\n", G.vexs[vs], G.vexs[i], dist[i]);
 }
  
---------------------- 
-作者：杨鑫newlfe 
-来源：CSDN 
-原文：https://blog.csdn.net/u012965373/article/details/47758775 
-版权声明：本文为博主原创文章，转载请附上博文链接！

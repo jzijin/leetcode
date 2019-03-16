@@ -1,0 +1,570 @@
+chapter 1 了解MySQL
+1.1 数据库基础
+1.1.1 什么是数据库
+    数据库(database)：保存有组织的数据的容器（通常是一个文件或一组文件）。
+1.1.2 表
+    表(table) 某种特定类型数据的结构化清单
+    模式(schema) 关于数据库和表的布局及特性的信息
+1.1.3 列和数据类型
+    列(column) 表中的一个字段。所有表都是由一个或多个列组成的
+    数据类型(datatype) 所容许的数据的类型。每个表列都有相应的数据类型，
+    它限制（或容许）该列中存储的数据
+1.1.4 行
+    行(row) 表中的一个记录
+1.1.5 主键
+    主键(primary key) 一列（或一组列），其值能够唯一区分表中每个行
+    应该总是定义主键 虽然并不总是都需要主键，但大多数数据库设计人员都
+    应保证他们创建的每个表具有一个主键，以便于以后的数据操纵和管理
+
+    表中的任何列都可以作为主键，只要它满足以下条件：
+        任何两行都不具有相同的主键值；
+        每个行都必须具有一个主键值
+
+    主键的最好习惯：
+        不更新主键列中的值
+        不重用主键列的值
+        不在主键列中使用可能会更改的值
+
+1.2 什么是SQL
+    SQL是结构化查询语言(Structured Query language)的缩写
+    SQL的优点：
+        SQL不是某个特定数据库供应商专有的语言。
+        SQL简单易学
+        SQL尽管看上去简单，但它实际上是一种强有力的语言。
+
+chapter 2 MySQL简介
+2.1 什么是MySQL
+    MySQL 是一种DBMS，它是一种数据库软件
+2.1.1 客户机-服务器软件
+    DBMS可分为两类：一类基于共享文件系统的DBMS，另一类为基于
+客户机-服务器的DBMS。
+2.1.2 MySQL 版本
+2.2 MySQL 工具
+2.2.1 MySQL命令行使用程序
+2.2.2 MySQL Administrator 图形交互机
+2.2.3 MySQL Query Browser
+
+chapter 3 使用MySQL
+3.1 连接 mysql -uuser_name -p
+3.2 选择数据库 use database_name;
+3.3 了解数据库和表： show tables; show columns form table_name
+
+chapter 4 检索数据
+4.1 SELECT 语句
+4.2 检索单个列：select prod_name form table_names;
+4.3 检索多个列：SELECT a,b from some_table;
+4.4 检索所有列：SELECT * FROM   some_tales;
+4.5 检索不同的行： SELECT DISTINCT vend_id FROM table;
+    SELECT DISTINCT 只返回不同（唯一）的id
+4.6 限制结果： SELECT something FROM tables LIMIT 5；
+    SELECT something FROM tables LIMIT 5，5；第一个数
+    为开始位置。第二个数为要检索的行数。
+4.7 使用完全限定的表名：SELECT products.name FROM products
+
+chapter 5 排序检索数据
+5.1 排序数据 SELECT * FROM table order by name;
+    子句(clause) SQL语句由子句构成，有的子句是必须的，而
+    有的是可选的。一个子句通常有一个关键字和所提供的数据组成。
+    子句的乐子有SELECT语句的FROM子句。
+5.2 按多个列排序
+    SELECT * FROM table ORDER BY id, name;
+5.3 指定排序方向
+    SELECT * FROM table ORDER BY price DESC（ASC）;
+    SELECT * FROM table ORDER BY price DESC（ASC）, name
+    在多个列上降序排序 如果想在多个列上进行降序排序，必须对
+    没格列都指定DESC关键字
+
+    ORDER BY 和 LIMIT 结合
+    SELECT *  FROM table ORDER BY price DESC（ASC）LIMIT 1;
+
+chapter 6 过滤数据
+6.1 使用WHERE子句 SELECT * FROM table WHERE price = 2.5
+    WHERE 子句的位置， 在同时使用 ORDER BY 和 WHERE 子句时
+    ORDER BY 位于 WHERE 之后。否则会产生错误
+6.2 WHERE 子句操作符
+= <>(不等于) ！=（不等于） < > <= >=  BETWEEN(指定两个值之间)
+6.2.1 检查单个值
+    SELECT * FROM table WHERE name = '';
+    SELECT * FROM table WHERE price > 10;
+6.2.2 不匹配查询
+    SELECT * FROM table WHERE id <>10;
+6.2.3 范围值检查
+    SELECT * FROM table WHERE price BETWEEN 5 AND 10;
+6.2.4 空值检查
+    NULL 无值(no value)，它与字段包括0、空字符串或仅仅包含空格不同
+    SELECT * FROM table WHERE price IS NULL
+
+chapter 7 数据过滤
+7.1 组合WHERE子句
+7.1.1 AND 操作符
+    SELECT * FROM table WHERE price>10 AND price <20
+7.1.2 OR 操作符
+    SELECT * FROM table WHERE price > 10 OR price < 20;
+7.2 IN 操作符
+    SELECT * FROM table WHERE id IN (1002, 1003) ORDER BY name;
+7.3 NOT 操作符
+    SELECT * FROM table WHERE id NOT IN (1002, 1003) ORDER BY name
+
+chapter 8 用通配符进行过滤
+8.1 LIKE操作符
+8.1.1 %通配符
+    SELECT * FROM table WHERE name LIKE 'jet%'
+    SELECT * FROM table WHERE name LIKE '%dd%'
+8.1.2 _通配符
+    用途和%一样，但下划线只匹配单个字符而不是多个字符
+    SELECT * FROM table WHERE name LIKE '_ a b'
+8.2 通配符使用技巧
+    通配符的处理一般要比前面讨论的其他搜索花更多的时间。
+    不要过度使用通配符
+    在确实需要使用通配符的地方使用
+    仔细注意通配符的位置
+
+chapter 9 用正则表达式进行搜索
+9.1 介绍
+9.2 使用MySQL正则表达式
+9.2.1 基本字符匹配
+    SELECT * FROM table WHERE name REGEXP '.100'
+    注意区别 LIKE 和 REGEXP 的区别
+9.2.2进行 OR 匹配
+    SELECT * FROM table WHERE name REGEXP '1000|2000'
+9.2.3 匹配几个字符之一
+    SELECT * FROM table WHERE name REGEXP '[123] jon'
+    [123] 定义一组字符，意思是匹配1或2或3
+9.2.4 匹配范围
+    SELECT * FROM table WHERE name REGEXP '[1-9] a'
+9.2.5 匹配特殊字符
+    SELECT * FROM table WHERE name REGEXP '\\.jjj'
+    特殊字符要经过转译 匹配 \ 要使用 \\\
+9.2.6 匹配字符类
+9.2.7 实例
+
+chapter 10 创建计算字段
+10.1 计算字段
+    如果想在一个字段既显示公司名，又公司的地址，但这两个信息一般包含在
+    不同的列表中？
+
+    字段(field) 基本上与列(column)的意思相同，经常互换使用，不过
+    数据库列一般称为列，而术语字段通常用在计算字段连接上。
+10.2 拼接字段
+    SELECT Concat(name, '(', country, ')') FROM table;
+    MySQL 使用Concat 来实现连接
+    SELECT Concat((RTrim(name)), '(', country, ')') FROM table
+    RTrim() 函数去掉右边的所有空格 LTrim Trim
+    
+    使用别名
+    SELECT Concat(name, '(', country, ')') AS vend_title FROM table
+
+10.3 执行算术计算
+    SELECT price*(+-/)num as total FROM table
+
+chapter 11 使用数据处理函数
+11.1 函数
+    SQL 支持利用函数来处理数据。函数一般是在数据上执行的，
+    它给数据的转换和处理提供了方便
+11.2 使用函数
+11.2.1 文本处理函数
+    SELECT Upper(name) AS new_name FROM table
+    Left() Length() Locate()<找出子串> Lower() LTrim() RIght(返回串的右边)
+11.2.2 日期和时间处理函数
+    AddDate()
+    AddTime()
+    CurDate()......
+    SELECT * FROM table WHERE Date(order_date) = '2015-09-10'
+    SELECT * FROM table WHERE Year(order_date) = 2005 AND Month(order_date) = 9
+11.2.3 数值处理函数
+    abs() cos() exp() mod() pi() sin() .....
+
+chapter 12 汇总数据
+12.1 聚集函数
+    AVG() 列平均值 COUNT() 行数 MAX() 列最大值
+    MIN() 列最小值 SUM() 列总和
+
+chapter 13 分组数据
+13.1 数据分组
+13.2 创建分组
+    分组是在 SELECT 语句中的 GROUP BY 子句中建立的。
+    SELECT id, COUNT(*) as num_prods FROM table GROUP BY id;
+13.3 过滤分组
+    HAVING 子句过滤 分组 HAVING 非常类似 WHERE。但是 WHERE 过滤行
+    HAVING 过滤分组
+    SELECT id COUNT(*) FROM table GROUP BY id HAVING COUNT(*) >=2;
+    HAVING 和 WHERE 的差别： WHERE在数据分组前过滤 HAVING 在数据分组后过滤
+13.4 分组和排序
+    GROUP BY 和 ORDER BY 经常完成相同的工作，但它们是非常不同的。
+    一般在使用 GROUP BY 子句时， 应该也给出 ORDER BY 子句。这是保证数据正确
+    排序的唯一方法。千万不要仅依赖 GROUP BY 的排序数据
+
+chapter 14 使用子查询
+14.1 子查询
+    嵌套在其他查询中的查询。
+14.2 使用子查询过滤
+
+chapter 15 联结表
+15.1 联结
+    SQL最强大的功能之一就是能在数据检索查询的执行中联结(join)
+15.1 关系表
+    外键(foreign key) 外键为某个表中的一列，它包含另一个表的主键值
+    定义了两个表之间的关系。
+    可伸缩性(scale) 能够适应不断增加的工作量而不失败。设计良好的数据库
+    或应用程序称之为可伸缩性好(scale well)
+15.1.2 为什么要使用联结？
+    联结是一种机制，用来在一条 SELECT 语句中关联表。可以联结多个表返回一组输出
+15.2 创建联结
+    SELECT a, b, c FROM table1, table2 WHERE table1.id = table2.id
+
+    笛卡尔积(cartesian product) 由没有联结条件的表关系返回的结果为笛卡尔积。
+    检索出的行的数目将是第一个表中的行数乘以第二个表中的行数
+15.2.2 内部联结
+    SELECT a ,bc FROM table1 INNER JOIN table2 on table1.id = table2.id
+15.2.3 联结过个表
+    性能考虑： 联结需要非常仔细，不要联结不必要的表。联结的表越多，性能下降的越厉害
+
+chapter 16 创建高级联结
+16.1 使用表别名
+    SELECT name, id FROM table1 as a table2 as b WHERE a.id = b.id
+16.2 使用不同类型的联结
+16.2.1 自联结
+    SELECT p1.prod_id, p1.prod_name
+    FROM products AS p1, products AS p2
+    WHERE p1.vend_id = p2.vend_id
+    AND p2.prod_id = 'DTNTR'
+
+    自联结常用作外部语句替代从相同的表查询数据的子查询
+16.2.2 自然联结
+16.2.3 外部联结
+    LEFT OUTER JOIN RIGHT OUTER JOIN 
+16.3 使用带聚集函数的联结
+
+chapter 17 组合查询
+    具有多个 WHERE子句的 SELECT 语句都可以作为一个组合查询给出
+17.2 创建组合查询
+    可用UNION操作符来组合数条SQL查询。
+17.2.1 使用UNION
+    SELECT a,b,c FROM table1 UNION SELECT * FROM table2
+17.2.2 UNION规则
+    UNION 必须由两条或两条以上的　SELECT 语句组成
+    UNION 中的每个查询必须包含相同的列、表达式或聚集函数
+    列数据类型必须兼容
+17.2.3 包含或取消重复的行
+    UNION 从查询结果自动去除了重复的行
+    如果不想去重 UNION ALL
+    UNION maybe = WHERE but UNION ALL != WHERE
+17.2.4 对组合查询结果排序
+    ORDER BY 接在最后一条 SELECT 语句之后。不允许多条 ORDER BY
+
+chapter 18 全文本搜索
+18.2.1 启动全文本搜索
+    CREATE TABLE (note_text char(10)..... FULLTEXT(note_text))ENGINE=MYIsam
+18.2.2 进行全文本搜索
+    SELECT note_text ,Match(note_text) Against('rabbit') AS rank FROM table
+    Match() 和 Against() 执行全文本搜索 Match() 指定被搜索的列
+    Against() 指定要使用的搜索表达式
+    使用完整的Match() 说明 传递给Match() 的值必须与 FULLTEXT() 定义
+    中的相同。如果指定多个列，则必须列出它们（而且次序正确）
+18.2.3 使用查询扩展
+    SELECT note_text ,Match(note_text) Against('rabbit' WITH QUERY EXPANSION) AS rank FROM table
+    查询扩展极大地增加了返回的行数，但这样做也增加了你实际上并不想要的行的数目
+18.2.4 布尔文本搜索
+    布尔搜索 即使没有FULLTEXT也可以使用
+
+chapter 19 插入数据
+19.2 插入完整的行
+    INSERT INTO table VALUES(a,b,b...)
+19.3 插入多个行
+19.4 插入检索出的数据
+    INSERT INTO table(a,b) SELECT a,b FROM table;
+
+chapter 20 更新和删除数据
+    为了更新（修改）表中的数据，可使用UPDATE语句。可采用两种
+方式使用UPDATE
+    更新表中特定行
+    更新表中所有行
+    不要省略 WHERE 子句， 在使用UPDATE是一定要细心注意。
+    UPDATE与安全 可以限制控制UPDATE语句的使用。
+    UPDATE table SET name = 'xxx' WHERE id = 5;
+
+    在UPDATE语句使用子查询： UPDATE语句中可以使用子查询
+    是的能用 SELECT 语句检索出的数据更新列数据
+
+    IGNORE关键字 如果用UPDATE语句更新多行，并且在更新这些行
+    中的一行或多行时出现一个错误，则整个UPDATE操作被取消。为
+    即使是发生错误，也继续更新，可使用IGNORE关键字；
+    UPDATE IGNORE table...
+
+    为了删除某个列的值，可设置它为NULL（假如表定义允许NULL值）
+20.2 删除数据
+    为了从一个表中删除（去掉）数据，使用DELETE语句。可以两种
+    方式使用DELETE:
+        从表中删除特定的行
+        从表中删除所有行
+    不要省略 WHERE 子句， 在使用DELETE是一定要细心注意。
+    DELETE与安全 可以限制控制DELETE语句的使用。
+    DELETE FROM table WHERE id = 5;
+    DELETE 不需要列名或通配符。DELETE 删除整行而不是删除列
+    如果需要删除列，使用　UPDATE
+
+    删除表的内容而不是表　DELETE 语句从表中删除行，甚至是删除
+    表中所有的行。但是　DELETE 不删除表本身
+
+    更快的删除　如果想清空一个表　用TRUNCATE table
+
+    建议在 UPDATE 和　DELETE 之前先用　SELECT 语句检查正确性
+
+chapter 21 创建和操纵表
+21.1 创建表
+    CREATE TABLE (......)ENGINE=InnoDB;
+21.1.3 主键再介绍
+    主键必须唯一。表中的每一行必须具有唯一的主键值。
+    主键只能使用不允许NULL值的列，允许NULL值的列不能作为唯一标识
+21.1.4 使用 AUTO_INCREMENT
+    自动增量，每个表只允许一个 AUTO_INCREMENT 列，而且它必须被索引
+    SELECT last_insert_id() 函数可以返回最后一个 AUTO_INCREMENT的值
+21.1.5 指定默认值
+    如果在插入行是没有给出值，MySQL 允许指定此时使用的默认值
+    DEFAULT 
+    MySQL 不允许使用函数作为默认值，它只支持常亮
+    使用默认值而不是NULL值 许多数据库开发人员使用默认值而不是NULL值，
+    特别是对计算或数据分组的列更是如此
+21.1.6 引擎类型
+    InnoDB 可靠的事物处理引擎，它不支持全文本搜索
+    MEMORY 在功能上等同与 MyISAM,但由于数据存储在内存
+    （不是磁盘）中，速度更快（特别适合临时表）
+    MyISAM 是一个性能极高的引擎，它支持全文搜索，但不支持事物
+
+    注意：外键不能跨引擎
+21.2 更新表
+    ALTER TABLE mytable ADD name varcha(20);
+    删除列
+    ALTER TABLE mytable DROP COLUMN name
+21.3 删除表
+    DROP TABLE mytable
+21.4 重命名表
+    RENAME TABLE mytable to mytablebak
+
+chapter 22 使用视图
+    视图是虚拟的表。和包含数据的表不一样，视图只包含使用时动态检索数据的查询
+22.1.1为什么使用视图
+    重用SQL语句
+    简化复杂的SQL操作。
+    使用表的组成部分而不是整个表
+    保护数据
+    更改数据格式和表示
+22.1.2视图的规则和限制
+    视图必须唯一命名
+    可以创建的视图数目没有限制
+    为了创建驶入，必须具有足够的访问权限
+    视图可以嵌套
+    ORDER BY可以用在视图中
+    视图不能索引
+    视图可以和表一起使用
+22.2 使用视图
+    视图用 CREATE VIEW 语句来创建
+    使用 SHOW CREATE VIEW viewname 来查看创建视图的语句
+    用 DROP 删除视图， 其语法为 DROP VIEW viewname
+    更新视图时，可以先用DROP再用CREATE，也可以直接用CREATE OR 
+    REPLACE VIEW
+22.2.1 利用视图简化复杂的联结
+    CREATE VIEW produ AS SELECT name FROM table WHERE
+    创建可重用的视图 创建不受特定数据限制的视图是一种好方法。
+22.2.2 用视图重新格式化检索出的数据
+22.2.3 用视图过滤不想要的数据
+
+chapter 23 使用存储过程
+23.2 为什么要使用存储过程
+    通过把处理封装在容易使用的单元中，简化复杂的操作
+    由于不要求反复建立一系列处理步骤，保证了数据的完整性
+    简化对变动的管理
+    提高性能
+    简单、安全、高性能
+
+    缺陷：
+        一般来说，存储过程的编写比基本SQL语句复杂， 编写存储过程需要更高
+        的技能，更丰富的经验
+        你可能没有创建存储过程的安全访问权限
+23.3 使用存储过程
+23.3.1 执行存储过程
+    CALL productpricing(
+        @pricelow,
+        @pricehigh,
+        @priceaverage
+    )
+23.3.2 创建存储过程
+    CREATE PROCEDURE producpricing()
+    BEGIN
+        SELECT Avg(prod_price)  AS priceaverage
+        FROM products;
+    END;
+
+    如何使用这个存储过程呢？ 
+    CALL productpricing
+23.3.3 删除存储过程
+    DROP PROCEDURE (IF EXISTS) producpricing;
+23.3.4 使用参数
+    变量（variale）内存中一个特定的位置，用来临时存储数据
+    CREATE PROCEDURE producpricing(OUT p1 DECIMAL(8,2)...)
+    BEGIN
+        SELECT Avg(prod_price)  AS priceaverage
+        FROM products;
+
+    END;
+    CALL producpricing(@pricelow,...)
+    变量名： 所有 MySQL 变量都必须以 @ 开始
+23.3.5 建立只能存储过程
+23.3.6 检查存储过程
+    SHOW CREATE PROCEDURE
+
+chapter 24 使用游标
+    游标(corsor)是一个存储在 MySQL 服务器上的数据库查询
+    它不是一条SELECT语句，而是被该语句检索出来的结果集。在
+    存储了游标之后，应用程序可以根据需要滚动或浏览其中的数据
+    只能用于存储过程！！！！
+24.2 使用游标
+    在能够使用游标前，必须声明（定义）它。
+    一旦声明后，必须打开游标以供使用。
+    对于填有数据的游标，根据需要取出（检索）各行
+    在结束游标使用时，必须关闭游标
+24.2.1 创建游标
+    CREATE PROCEDURE processorders()
+    BEGIN
+        DECLARE ordernumbers CURSOR
+        FOR 
+        SELECT order_num FROM orders;
+    END;
+24.2.4 打开和关闭游标
+    OPEN ordernumbers
+    CLOSE ordernumbers
+    隐含关闭 如果你不明确关闭游标， MySQL讲会在到达END语句时关闭它
+24.2.3 使用游标数据
+    在一个游标被打开后，可以使用 FETCH 语句分别访问它的每一行。
+    FETCH 指定检索什么数据，检索出来的数据存储在什么地方
+
+chapter 25 触发器
+    触发器是MySQL响应以下任何语句而自动执行的一条MySQL 语句
+    DELETE
+    INSERT
+    UPDATE
+25.2 创建触发器
+    唯一的触发器名
+    触发器关联的表
+    触发器应该响应什么的活动(DELETE INSERT UPDATE)
+    触发器何时执行（处理之前还是之后）
+    CREATE TRIGGER newproduct AFTER INSERT ON products
+    FOR EACH ROW SELECT 'product added'
+    触发器在插入后和查找前执行
+    仅支持表 只有表才支持触发器，视图和临时表不支持。
+    单一触发器不能与多个时间或多个表关联，所以，如果你需要一个对
+    INSERT 和 UPDATE 操作的触发器，则应该定义两个触发器
+25.3 删除触发器
+    DROP TRIGGER newproduct
+    触发器不能更新或覆盖。为了修改一个触发器，必须先删除它，然后在重新创建
+25.4 使用触发器 
+25.4.1 INSERT 触发器
+    CREATE TRIGGER neworder AFTER INSERT On orders
+    FOR EACH ROW SELECT NEW.order_num
+25.4.2 DELETE 触发器
+
+chapter 26 管理事物处理
+    事物处理（transition processing）可以用来维护数据库
+    的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行
+
+    事务（transaction） 指一组SQL语句
+    回退（rollback）指撤销指定SQL语句的过程
+    提交（commit）指讲未存储的SQL语句结果写入数据表中
+    保留点（savepoint）指事务处理中设置的临时占位符，你可以对它发布回退
+
+26.2控制事务处理
+    START TRANSACTION 标识事务的开始
+26.2.1 使用 ROLLBACK
+    START TRANSACTION
+    DELETE FROM table
+    ROLLBACK
+    SELECT * FROM table
+26.2.2 使用COMMIT
+    事务中提交不会隐含执行必须自己手动提交
+    隐含事务关闭 当 COMMIT 或 ROLLBACK 语句执行后，事务会自动关闭
+    （将来的更改会隐含提交）
+26.2.3 使用保留点
+    为了支持回退部分事务处理，必须能在事务处理块中合适的位置放置占位符
+    这样，如果需要回退，可以回退到某个占位符
+    这些占位符成为保留点。为了创建占位符，可以使用 SAVEPOINT
+    SAVEPOINT name
+    ROLLBACK to name 可以回退到这个节点
+
+    保留点越多越好 你可以按照你的意愿自由回退
+26.2.4 更改默认的提交行为
+    为指示 MySQL 不自动提交更改，需要使用
+    SET autocommit = 0;
+    autocommit 标志决定是否自动提交更改，不管有没有COMMIT语句
+    知道 autocommit 被设置为真为止
+    标志为链接专用 autocommit 标志是针对每个连接而不是服务器的
+
+chapter 27 全球化和本地化
+27.1 字符集和校对顺序
+    字符集为字母和符号的集合
+    编码为某个字符集成员的内部表示
+    校对为规定字符如何比较的指令
+
+chapter 28 安全管理
+28.1 访问控制
+    MySQL服务器的安全基础是: 用户应该对他们需要的数据具有适当的访问权
+    ，既不能多也不能少。
+28.2 管理用户
+    MySQL用户账号和信息存储在名为mysql的MySQL数据库中。一般
+    不需要直接访问mysql数据库和表。要直接访问的话
+    USE mysql
+    SELECT user FROM user;
+28.2.1 创建用户账号
+    CREATE USER ben IDENTIFIED BY 'p@$$w0rd';
+    指定散列口令 IDENTIFIED BY 指定的口令为纯文本，
+    MySQL将在保存到user表之前对其进行加密。为了作为散列值
+    指定口令，使用 IDENTIFIED BY PASSWORD
+    重命名：
+        RENAME USER ben TO shabi
+28.2.2 删除用户账号
+    DROP USER shabi;
+28.2.3 设置访问权限
+    SHOW GRANTS FOR shabi
+    设置权限，使用 GRANT 语句
+        要授予的权限
+        要被授予访问权限的数据库或表
+        用户名
+    GRANT SELECT ON table .* TO shabi;
+    REVOKE 取消赋予的权限
+28.2.4 更改口令
+    SET PASSWORD FOR shabi  = Password('jjsd');
+    新口令必须传递到Password() 函数进行加密
+
+chapter 29 数据库维护
+29.1 备份数据
+    mysqldump mysqlhotcopy BACKUP TABLE SELECT INTO OUTFILE
+    首先刷新未写数据 为了保证所有数据被写到磁盘（包括索引数据）
+    可能需要在备份前使用FLUSH TABLE语句
+29.2 进行数据库维护
+    ANALYZE TABLE mytable 用来检查表键是否正确。
+    CHECK TABLE mytable 用来针对许多问题对表进行检查
+29.3 诊断启动问题
+    --help 显示帮助
+    --safe-mode 装载减去某些最佳配置的服务器
+    --version 版本
+    --verbose 显示全文本消息
+29.4 查看日志文件
+    错误日志。hostname.err, 位于data 目录。此文件名可以
+    用--log-error 命令行选项来更改
+    查询日志。hostname.log data 名字可以用--log更改
+    二进制日志。hostname-BEGIN data 用--log-bin 更改
+    缓慢查询文件 对数据库优化很有用，hostname-slow.log data --log-slow-queries 更改
+
+chapter 30 改善性能
+30.1 改善性能
+    
+
+
+
+
+    
+
+
+
+
+
+
